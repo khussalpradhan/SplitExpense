@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:6.0
+    container_name: splitexpense-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    restart: unless-stopped
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: splitexpense-app:latest
+    container_name: splitexpense-app
+    platform: "linux/amd64"
+    ports:
+      - "8090:8090"
+    depends_on:
+      - mongo
+    environment:
+      # override properties in application.properties to point to the mongo service
+      - SPRING_DATA_MONGODB_HOST=mongo
+      - SPRING_DATA_MONGODB_PORT=27017
+    restart: unless-stopped
+
+volumes:
+  mongo-data:
