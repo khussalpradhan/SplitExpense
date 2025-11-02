@@ -1,6 +1,4 @@
 package com.example.splitExpenseFinal.document;
-
-import com.sun.istack.internal.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
